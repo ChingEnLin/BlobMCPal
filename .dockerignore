@@ -1,0 +1,12 @@
+.git
+.github
+*.md
+!README.md
+*.pyc
+__pycache__
+.mypy_cache
+.ruff_cache
+dist/
+*.egg-info/
+.venv/
+venv/

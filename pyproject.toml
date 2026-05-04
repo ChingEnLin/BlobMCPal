@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "blobmcpal"
+version = "1.0.0"
+description = "Azure Storage Account MCP server — explore Blob, Queue, File Share, and Table storage through Claude"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.12"
+dependencies = [
+    "mcp[cli]>=1.0.0",
+    "azure-identity>=1.15.0",
+    "azure-mgmt-storage>=21.0.0",
+    "azure-mgmt-subscription>=3.0.0",
+    "azure-storage-blob>=12.19.0",
+    "azure-storage-queue>=12.9.0",
+    "azure-storage-file-share>=12.20.0",
+    "azure-data-tables>=12.4.0",
+    "cachetools>=5.3.0",
+]
+
+[project.scripts]
+blobmcpal = "blobmcpal.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/blobmcpal"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["B008"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+ignore_missing_imports = true

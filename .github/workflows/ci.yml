@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: Lint & type-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dev tools
+        run: pip install ruff mypy cachetools
+
+      - name: Install package
+        run: pip install --no-cache-dir -e .
+
+      - name: ruff check
+        run: ruff check src/
+
+      - name: ruff format check
+        run: ruff format --check src/
+
+      - name: mypy
+        run: mypy src/blobmcpal/
+
+  docker:
+    name: Docker build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          platforms: linux/amd64
+          push: false
+          tags: blobmcpal:ci
