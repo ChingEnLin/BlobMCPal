@@ -378,7 +378,7 @@ def get_table_entity(table_name: str, partition_key: str, row_key: str) -> str:
 @mcp.tool()
 def check_auth() -> str:
     """
-    Check whether the Azure CLI credential is available and working.
+    Check whether the Azure CLI credential is available and working for Azure Storage access.
 
     Attempts to list subscriptions using the current az login session.
     Call this first if you are getting authentication errors, or to confirm
@@ -433,7 +433,7 @@ def show_context() -> str:
 @mcp.tool()
 def set_context(container: Optional[str] = None) -> str:
     """
-    Update session settings without reconnecting to the account.
+    Update Azure Storage session settings without reconnecting to the account.
 
     Args:
         container: New default container name. Pass null to clear.
